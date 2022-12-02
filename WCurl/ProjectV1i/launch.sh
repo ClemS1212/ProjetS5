@@ -1,6 +1,7 @@
 #!/bin/bash
 
 
+
 touch nc.txt
 echo '' > network.txt
 

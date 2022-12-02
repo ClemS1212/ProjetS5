@@ -1,0 +1,316 @@
+(deftemplate MAIN::event
+   (slot type)
+   (slot priority))
+
+(deftemplate MAIN::action
+   (slot type)
+   (slot duration)
+   (slot job))
+
+(deftemplate MAIN::priority
+   (slot level))
+
+(deftemplate MAIN::person
+   (slot job))
+
+;####################################### Doctor ##########################################
+
+; (defrule MAIN::name
+;     (fact1)
+;     (fact2)
+;     (fact3)
+;     =>
+;     (command1)
+;     (command2)
+;
+;Before the arrow => : IF all the (facts) here are in the facts-list, THEN the rule is fired
+;After the arrow : all the (commands) here are performed if the rule is fired.
+
+
+(defrule MAIN::surgery
+   ?f <- (event (type surgery) (priority ?p))
+   ;?f2 <- (cpt finish)
+   ?f3 <- (status no-emergency)
+   (job doctor)
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://en.wikipedia.org/wiki/Surgery')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (retract ?f)
+   (assert (status in-emergency))
+   (assert (status not-free))
+   (assert (action (type surgery) (duration 5) (job doctor)))
+   (retract ?f3))
+   ;(assert (cpt start)))
+
+
+(defrule MAIN::end-surgery
+   ?f <- (action (type surgery) (duration ?d) (job doctor))
+   ?f2 <- (stop surgery)
+   ?f3 <- (status not-free)
+   ?f4 <- (status in-emergency)
+   (job doctor)
+   =>
+   (retract ?f ?f2 ?f3 ?f4)
+   (assert (status free))
+   (assert (status no-emergency)))
+   
+
+(defrule MAIN::consultation
+   ?f <- (event (type consultation) (priority ?p))
+   (status no-emergency)
+   ?f2 <- (status free)
+   (job doctor)
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (assert (action (type consultation) (duration 1) (job doctor)))
+   (retract ?f ?f2)
+   (assert (status not-free)))
+
+(defrule MAIN::end-consultation
+   ?f <- (action (type consultation) (duration ?d) (job doctor))
+   ?f2 <- (stop consultation)
+   ?f3 <- (status not-free)
+   (job doctor)
+   =>
+   (retract ?f ?f2 ?f3)
+   (assert (status free)))
+
+
+
+
+
+;####################################### Nurse ##############################################
+
+
+(defrule MAIN::surgery-n
+   ?f <- (event(type surgery)(priority ?p))
+   ?f2 <- (status no-emergency)
+   (job nurse)
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://en.wikipedia.org/wiki/Surgery')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (retract ?f ?f2)
+   (assert (status in-emergency))
+   (assert (status not-free))
+   (assert (action (type surgery) (duration 5) (job nurse))))
+
+(defrule MAIN::end-surgery-n
+   ?f <- (action (type surgery)(duration ?d)(job nurse))
+   ?f2 <- (stop surgery)
+   ?f3 <- (status not-free)
+   ?f4 <- (status in-emergency)
+   (job nurse)
+   =>
+   (retract ?f ?f2 ?f3 ?f4)
+   (assert (status free))
+   (assert (status no-emergency)))
+
+
+(defrule MAIN::nursing
+   ?f <- (event (type nursing)(priority ?p))
+   (status no-emergency)
+   ?f2 <- (status free)
+   (job nurse)
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://fr.wikipedia.org/wiki/Infirmier')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (retract ?f ?f2)
+   (assert (action (type nursing)(duration 1)(job nurse)))
+   (assert (status not-free)))
+
+
+(defrule MAIN::end-nursing
+   ?f <- (action (type nursing)(duration ?d)(job nurse))
+   ?f2 <- (status not-free)
+   ?f3 <- (stop nursing)
+   (job nurse)
+   =>
+   (retract ?f ?f2 ?f3)
+   (assert (status free)))
+
+
+
+
+
+
+
+;####################################### Secretary ###########################################
+
+(defrule MAIN::admission
+   ?f <- (event(type admission)(priority ?p))
+   ?f2 <- (status free)
+   (job secretary)
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://fr.wikipedia.org/wiki/Secr%C3%A9tariat')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (retract ?f ?f2)
+   (assert (action (type admission)(duration 0.5)(job secretary)))
+   (assert (status not-free)))
+
+(defrule MAIN::end-admission
+   ?f <- (action (type admission)(duration ?d)(job secretary))
+   ?f2 <- (status not-free)
+   ?f3 <- (stop admission)
+   (job secretary)
+   =>
+   (retract ?f ?f2 ?f3)
+   (assert (status free)))
+
+(defrule MAIN::pause-cafe
+   (job secretary)
+   ?f <- (status free)
+   ?f2 <- (event (type pause-cafe)(priority ?p))
+   =>
+   (open "../network.txt" data "a")
+   (printout data "driver.get('https://www.cersa.org/wp-content/uploads/2019/09/pause-cafe-travail.jpg')" crlf)
+   (close)
+   (open "../nc.txt" datanc "a")
+   (printout datanc "./ip.sh &" crlf)
+   (close)
+   (retract ?f ?f2)
+   (assert (status not-free))
+   (assert (action (type pause-cafe)(duration 2)(job secretary))))
+
+(defrule MAIN::end-pause-cafe
+   (job secretary)
+   ?f <- (status not-free)
+   ?f2 <- (action (type pause-cafe)(duration ?d)(job secretary))
+   ?f3 <- (stop pause-cafe)
+   =>
+   (retract ?f ?f2 ?f3)
+   (assert (status free)))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;###############################################################################################
+
+
+
+
+
+(defrule MAIN::cpt1
+   (declare (salience 50))
+   ?f <- (cpt start)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 1)))
+
+(defrule MAIN::cpt2
+   ?f <- (cpt 1)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 2)))
+
+(defrule MAIN::cpt3
+   ?f <- (cpt 2)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 3)))
+
+(defrule MAIN::cpt4
+   ?f <- (cpt 3)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 4)))
+
+(defrule MAIN::cpt5
+   ?f <- (cpt 4)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 5)))
+
+(defrule MAIN::cpt6
+   ?f <- (cpt 5)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 6)))
+
+(defrule MAIN::cpt7
+   ?f <- (cpt 6)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 7)))
+
+(defrule MAIN::cpt8
+   ?f <- (cpt 7)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 8)))
+
+(defrule MAIN::cpt9
+   ?f <- (cpt 8)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 9)))
+
+(defrule MAIN::cpt10
+   ?f <- (cpt 9)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 10)))
+
+(defrule MAIN::cpt11
+   ?f <- (cpt 10)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 11)))
+
+(defrule MAIN::cpt12
+   ?f <- (cpt 11)
+   (hour ?x)
+   =>
+   (retract ?f)
+   (assert (cpt 12)))
+
+(defrule MAIN::cptfin
+   (declare(salience 100))
+   ?f1 <- (action (type ?type) (duration ?d) (job ?job))
+   ?f2 <- (cpt ?d)
+   ?f3 <- (status not-free)
+   =>
+   (retract ?f1 ?f2 ?f3)
+   (assert (status free))
+   (assert (cpt finish)))

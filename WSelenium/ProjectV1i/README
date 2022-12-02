@@ -1,0 +1,7 @@
+
+-Install requirements by using : ./install.sh
+
+-Launch generator using : ./launch.sh
+
+A network.txt file is created in the folder, with all the supposedly
+generated network.

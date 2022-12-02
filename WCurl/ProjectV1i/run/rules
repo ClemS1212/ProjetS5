@@ -15,16 +15,16 @@
 
 ;####################################### Doctor ##########################################
 
-;(defrule MAIN::name
-;   (fact1)
-;   (fact2)
-;   (fact3)
-;   =>
-;   (command1)
-;   (command2)
-;Before the arrow : IF al the (facts) listed here are in the fact list, THEN the rule is fired
-;After the arrow : All the commands to be performed when the rule is fired.
-
+; (defrule MAIN::name
+;     (fact1)
+;     (fact2)
+;     (fact3)
+;     =>
+;     (command1)
+;     (command2)
+;
+;Before the arrow => : IF all the (facts) here are in the facts-list, THEN the rule is fired
+;After the arrow : all the (commands) here are performed if the rule is fired.
 
 
 (defrule MAIN::surgery
@@ -33,7 +33,6 @@
    ?f3 <- (status no-emergency)
    (job doctor)
    =>
-   
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://en.wikipedia.org/wiki/Surgery" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -64,7 +63,6 @@
    ?f2 <- (status free)
    (job doctor)
    =>
-   
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://www.youtube.com/watch?v=dQw4w9WgXcQ" crlf)
    (printout datanc "./ip.sh &" crlf)
