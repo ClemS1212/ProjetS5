@@ -23,15 +23,12 @@ time.sleep(3)
 
 os.chdir('./run')
 if job == 'doctor':
-   # os.system("xterm -e 'python3 prog.py ' &")
     os.system('./rundoctor.sh')
     
     
 elif job == 'nurse':
     os.system('./runnurse.sh')
-    #os.system('python3 tail.py')
 elif job == 'secretary':
     os.system('./runsecretary.sh')
-    #os.system('python3 tail.py')
 
 

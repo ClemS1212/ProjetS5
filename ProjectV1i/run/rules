@@ -15,15 +15,25 @@
 
 ;####################################### Doctor ##########################################
 
+;(defrule MAIN::name
+;   (fact1)
+;   (fact2)
+;   (fact3)
+;   =>
+;   (command1)
+;   (command2)
+;Before the arrow : IF al the (facts) listed here are in the fact list, THEN the rule is fired
+;After the arrow : All the commands to be performed when the rule is fired.
+
+
+
 (defrule MAIN::surgery
    ?f <- (event (type surgery) (priority ?p))
    ;?f2 <- (cpt finish)
    ?f3 <- (status no-emergency)
    (job doctor)
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://en.wikipedia.org/wiki/Surgery')" crlf)
-   ;(close)
+   
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://en.wikipedia.org/wiki/Surgery" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -54,9 +64,7 @@
    ?f2 <- (status free)
    (job doctor)
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" crlf)
-   ;(close)
+   
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://www.youtube.com/watch?v=dQw4w9WgXcQ" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -86,9 +94,6 @@
    ?f2 <- (status no-emergency)
    (job nurse)
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://en.wikipedia.org/wiki/Surgery')" crlf)
-   ;(close)
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://en.wikipedia.org/wiki/Surgery" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -116,9 +121,6 @@
    ?f2 <- (status free)
    (job nurse)
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://fr.wikipedia.org/wiki/Infirmier')" crlf)
-   ;(close)
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://fr.wikipedia.org/wiki/Infirmier" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -150,9 +152,6 @@
    ?f2 <- (status free)
    (job secretary)
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://fr.wikipedia.org/wiki/Secr%C3%A9tariat')" crlf)
-   ;(close)
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://fr.wikipedia.org/wiki/Secr%C3%A9tariat" crlf)
    (printout datanc "./ip.sh &" crlf)
@@ -175,9 +174,6 @@
    ?f <- (status free)
    ?f2 <- (event (type pause-cafe)(priority ?p))
    =>
-   ;(open "../network.txt" data "a")
-   ;(printout data "driver.get('https://www.cersa.org/wp-content/uploads/2019/09/pause-cafe-travail.jpg')" crlf)
-   ;(close)
    (open "../nc.txt" datanc "a")
    (printout datanc "curl -A 'Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0' https://fr.wikipedia.org/wiki/Pause_caf%C3%A9" crlf)
    (printout datanc "./ip.sh &" crlf)
