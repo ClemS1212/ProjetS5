@@ -1,0 +1,28 @@
+############################################### README ####################################################
+
+Choose either the Selenium (WSelenium directory) or the Curl (WCurl directory) version.
+
+1) Place the .tar.gz archive in the home directory on the instance that will be used.
+2) tar -xzvf P**.tar.gz
+3) cd ProjectV1i/
+4) ./install.sh
+5) Exit the instance and create a snapshot or an image of it in its current state.
+6) Once the image is uploaded on Openstack, copy the image ID
+7) Go at the top of stack*.yml file and replace the "image_linux" default with the good ID you copied before
+8) Create a pile with the good stack*.yml file
+
+===> All the instances launch and start generating network traffic.
+
+
+
+NOTE : Currently it is not real time but very accelerated.
+
+You can choose to slow it and the number of days it lasts in :
+
+ProjectV1i/run/EventGeneratorX.py
+
+At the very end of this file you will find a while loop : "while d<1" ---> 1 is for 1 days, 2 for 2 days, etc ...
+Also 3 lines before the end you will find the line "time.sleep(result[2]/15) ---> /15 is accelerated
+										Change it to *60 for real-time!
+
+ 
