@@ -66,7 +66,7 @@
    (job doctor)
    =>
    (open "../network.txt" data "a")
-   (printout data "driver.get('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" crlf)
+   (printout data "driver.get('https://fr.wikipedia.org/wiki/Consultation_m%C3%A9dicale')" crlf)
    (close)
    (open "../nc.txt" datanc "a")
    (printout datanc "./ip.sh &" crlf)

@@ -1,0 +1,6 @@
+
+print("Starting...")
+import os
+import signal
+from selenium import webdriver
+driver = webdriver.Firefox()
